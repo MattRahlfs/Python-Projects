@@ -18,6 +18,7 @@ word = random.choice(words())
 print (word)
 word_length = len(word)
 written_word = ['-']*word_length
+word_to_listtype = list(word)
 
 def write_out_word(written_word):
     stringword =''
@@ -42,8 +43,12 @@ while len(letters_correct) < word_length:
         letters_used.append(guess)
         if guess in word:
             print(f'The letter {guess} is in the word')
+            
+            letter_indexs = [ i for i, e in enumerate(word_to_listtype) if e in guess]
+            for each in letter_indexs:
+                written_word[each] = guess
             letter_count = word.count(guess)
-            written_word[list(word).index(guess)] = guess
+            #written_word[word_to_listtype.index(guess)] = guess
             while letter_count > 0:
                 letters_correct.append(guess)
                 letter_count -= 1
