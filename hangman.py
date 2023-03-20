@@ -10,35 +10,32 @@ def words():
     
     return words
 
-# choose a word
-
+# choose a word from the list of words
 word = random.choice(words())
 
-#word = 'aabc'
-print (word)
+#print (word)
+#storing common information to be used multple times
 word_length = len(word)
 written_word = ['-']*word_length
 word_to_listtype = list(word)
 
+#function to print out the word in  ----- format
 def write_out_word(written_word):
     stringword =''
     for each in written_word:
         stringword += (f'{each} ') 
     return stringword
 
-#loop until length of correct letters is the same length as the word
+#loop until length of correct letters is the same length as the word - checking that you got all the letters
 while len(letters_correct) < word_length:
     
     print(write_out_word(written_word))
-    
-        
+     
     # ask the user for a letter
     guess  = input('What letter would you like to guess? ')
     
     
-    
-
-# if the letter is not in a list of letters already used...
+# appeding the letter to the letters used and correct letters lists
     if guess not in letters_used:
         letters_used.append(guess)
         if guess in word:
@@ -48,7 +45,7 @@ while len(letters_correct) < word_length:
             for each in letter_indexs:
                 written_word[each] = guess
             letter_count = word.count(guess)
-            #written_word[word_to_listtype.index(guess)] = guess
+            
             while letter_count > 0:
                 letters_correct.append(guess)
                 letter_count -= 1
@@ -59,6 +56,4 @@ while len(letters_correct) < word_length:
         print('The letter ' + guess + ' has already been used')
             
 
-print (write_out_word(written_word), letters_correct)
-# if the letter is in the word append to list of letters in word
-
+print ('\n' + write_out_word(written_word), '  |  You win!\n')
