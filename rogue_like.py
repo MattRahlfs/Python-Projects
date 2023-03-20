@@ -24,6 +24,39 @@ def typingInput(text):
   value = input()  
   return value  
 
+def mineOre(player, typeOfOre):
+    requiredLeveltoMineOre = {
+        'tin': 1,
+        'copper': 5,
+        'iron': 10,
+        'coal': 15
+        
+    }
+    
+    playerMiningLevel = player.stats['Mining']
+    
+    if playerMiningLevel < requiredLeveltoMineOre[typeOfOre.lower()]:
+        print ('You do not meet the level requirment.')
+    else:
+        counter = 4
+        print ('You attempt to mine the ore...')
+        while counter >= 0:
+            sucessfulMine = random.randint(0, 4)
+            if sucessfulMine == 1:
+                player.add_to_inventory(typeOfOre)
+                print ('You successfully mine the ore')
+                player.add_stat('Mining', 1)
+                break
+            elif counter == 0 and sucessfulMine != 1:
+                print ('You failed to mine the ore.')
+                
+            counter -= 1
+        
+        
+    
+    
+    
+
 
     
 
@@ -47,14 +80,15 @@ class adventurer():
             'Health': 0,
             'Strength': 0,
             'Wisdom': 0,
-            'Defence': 0
+            'Defence': 0,
+            'Mining': 0
                       }
     
     def get_inventory(self):
         return self.inventory
     
     def add_to_inventory(self, item):
-        self.inventory.extend(item)
+        self.inventory.append(item)
         
     def remove_from_inventory(self, item):
         self.inventory.remove(item)
@@ -115,36 +149,21 @@ slow_print(0,["Welcome to  --- GAME ---."])
 slow_print(.8,["Lets create your character... "])
 
 
-name = str(typingInput('What do you want to be named?\n'))
+""" name = str(typingInput('What do you want to be named?\n'))
 weight = float(typingInput('What is your weight in pounds?\n'))
 height = float(typingInput('How tall are you in feet?\n'))
 race = str(typingInput('What is your race? (Human, Elf, Dwarf, Orc)\n'))
 typeofclass = str(typingInput('What class do you want to be? (Warrior, Priest, Rogue)\n'))
-
-character = adventurer(name, weight, height, race, typeofclass)
+ """
+character = adventurer('player1', 150, 6, 'elf', 'warrior')
 orc = enemy('orc1', 'melee', 10)
 
-
-if character.typeofclass.lower() == 'priest':
-    character.add_stat('Health', 10)
-    character.add_stat('Strength', 3)
-    character.add_stat('Wisdom', 15)
+character.add_stat('Mining', 3)
 
 
-orc.add_stat('Health', 10)
-orc.add_stat('Strength', 10)
-orc.add_stat('Defence', 10)
+mineOre(character, 'tin')
 
-
-while True:
-    
-    choice = int(input('what do you want to do? 1 2 3\n'))
-    
-    if choice == 1:
-        damage = character.attack(orc)
-        orc.remove_stat('Health', damage)
-        print(orc.stats)
-    
+print(character.get_inventory(), character.get_stats())
  
  
     
