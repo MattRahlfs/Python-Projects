@@ -32,7 +32,32 @@ class DoublyLinkedList():
             currentNode.next = newNode
             newNode.previous = currentNode
             newNode.next  = None
+    
+    def insert_At_Index_N(self, data, indexVal):
+        newNode = Node(data)
         
+
+        if self.head is None:
+            self.head = newNode
+        else:
+            currentNode = self.head
+            counter = 1
+            while currentNode.next is not None:
+                        
+                if counter == indexVal - 1:
+                    newNode.next = currentNode.next
+                    currentNode.next = newNode
+                    break
+                counter += 1
+                currentNode = currentNode.next
+                
+                    
+                
+           
+           
+        
+                   
+    
     def print_List(self):
         currentNode = self.head
         
@@ -56,23 +81,23 @@ class DoublyLinkedList():
 
 dll = DoublyLinkedList()
 
-dll.prepend(0)
+
 dll.append(1)
-dll.append('things')
 dll.append(2)
 dll.append(3)
-dll.prepend(65)
-dll.append('dsf')
-dll.append(['a','b','c'])
+dll.append(4)
+dll.append(5)
+dll.append(6)
+dll.prepend(0)
+dll.insert_At_Index_N(100, 4)
 
 items = dll.create_Array_Of_List()
 print(items)
-dll.print_List()
 
 
-for index, eachitem in enumerate(items):
-    print (items[index])
- 
+
+
+
 
 
 
