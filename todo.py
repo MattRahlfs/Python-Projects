@@ -11,7 +11,30 @@ class task():
         
         pass
             
-
+def mainMenu():
+    
+    while True:
+        userInput = input("Press 1 to list the tasks\nPress 2 to create a a new task\nPress 3 to update a task\nPress 4 to delete a task\nPress q to quit\nEnter an option: ")
+        
+        if userInput == '1':
+            displayTasks()
+        elif userInput == '2':
+            createTasks()
+        elif userInput == '3':
+            taskIndexToUpdate = input("What index would you like to update?  ")
+            updateTasks(int(taskIndexToUpdate))
+        elif userInput == '4':
+            taskIndexToDelete = input("What index would you like to delete?  ")
+            deleteTask(int(taskIndexToDelete))
+        elif userInput == 'q':
+            break
+        elif userInput != '1' or '2' or '3' or 'q':
+            print("\nEnter a correct value\n")
+            mainMenu()
+        else:
+            break
+        
+        
 def jsonFileIO(data, readOrWrite, fileName):
         
     if readOrWrite == 'r':
@@ -46,10 +69,12 @@ def createFileStructure():
 def displayTasks():
     
     todoList = jsonFileIO('', 'r', 'todo.json')
-    
+    print ('\n','Task:', '               ', 'Time created:', '\n')
     for eachTask in todoList['Tasks']:
         
-        print (eachTask)
+        print (eachTask['Description'], '               ',eachTask['Time'])
+    
+    print('\n')
     
     
     
@@ -61,27 +86,46 @@ def createTasks():
     
     todoList['Tasks'].append({'Description': newTask.description, 'Time': newTask.time})
     
-    jsonFileIO(todoList, 'w', 'todo.json') 
+    jsonFileIO(todoList, 'w', 'todo.json')
+    
+    displayTasks()
         
 
 # allow user to update a task
     #find the task based on name and update the description for that particular index  
-def updateTasks():
+def updateTasks(taskIndexToUpdate):
     
+    todoList = jsonFileIO('', 'r', 'todo.json')
+    taskDetail = input("Enter the task description you want to add to the list  ")
+    newTask = task(taskDetail)
+     
+    todoList['Tasks'][taskIndexToUpdate -1]['Description'] = newTask.description
+    
+    jsonFileIO(todoList,'w','todo.json')
+    
+    displayTasks()
+     
     pass
 
-
-# allow user to delete a task
-    #find the task based on name and delete that index
     
-def deleteTask():
+def deleteTask(taskIndexToDelete):
+    
+    todoList = jsonFileIO('', 'r', 'todo.json')
+    
+    todoList['Tasks'].pop(taskIndexToDelete -1)
+    
+    jsonFileIO(todoList, 'w', 'todo.json')
+    
+    displayTasks()
+    
     pass
 
 
 
 createFileStructure()
-#createTasks()
-displayTasks()
+mainMenu()
+
+
 
 
 
